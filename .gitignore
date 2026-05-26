@@ -1,0 +1,18 @@
+.DS_Store
+
+# Generated frames and render experiments
+render_frames/
+walk_together_frames/
+
+# Earlier previews and source-render experiments
+active_link_preview.jpg
+assets/end_scene.png
+assets/start_scene.png
+game_preview.png
+girls_walk_together_15s_hq.mp4
+girls_walk_together_hq_preview.jpg
+items_sprite_preview.jpg
+memory_match_15s.mp4
+memory_match_contact_sheet.jpg
+render_walk_together.py
+walk_start_check.jpg

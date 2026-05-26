@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Forgotten Island: Match the Memories</title>
+    <link rel="stylesheet" href="./styles.css?v=best-items-small2" />
+  </head>
+  <body>
+    <main class="phone-game" aria-label="Forgotten Island memory matching game">
+      <section id="stage" class="stage" aria-label="Match the memory items">
+        <video
+          id="storyVideo"
+          class="story-video"
+          src="./assets/story-background.mp4?v=best-items-small2"
+          poster="./assets/story-poster.jpg?v=best-items-small2"
+          preload="auto"
+          muted
+          playsinline
+        ></video>
+        <div class="video-shade" aria-hidden="true"></div>
+        <svg id="links" class="links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div id="items" class="items-layer" aria-label="Memory items"></div>
+        <div id="burstLayer" class="burst-layer" aria-hidden="true"></div>
+        <p id="status" class="sr-only" aria-live="polite">Choose two matching memory items.</p>
+      </section>
+    </main>
+
+    <script src="./game.js?v=best-items-small2"></script>
+  </body>
+</html>

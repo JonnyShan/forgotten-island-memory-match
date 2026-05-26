@@ -1,0 +1,271 @@
+:root {
+  color-scheme: dark;
+  --ink: oklch(96% 0.01 292);
+  --cyan: oklch(83% 0.18 202);
+  --violet: oklch(75% 0.2 306);
+  --rose: oklch(76% 0.18 18);
+  --gold: oklch(84% 0.16 84);
+  --good: oklch(81% 0.17 150);
+  --bad: oklch(70% 0.2 24);
+  --night: oklch(8% 0.035 285);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  background:
+    radial-gradient(circle at 50% 18%, oklch(34% 0.11 296 / 0.42), transparent 28rem),
+    linear-gradient(180deg, oklch(12% 0.045 278), var(--night));
+  color: var(--ink);
+}
+
+body {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+}
+
+.phone-game {
+  width: min(calc(100vw - 24px), calc((100svh - 24px) * 1.742), 864px);
+  aspect-ratio: 864 / 496;
+  max-height: calc(100svh - 24px);
+  display: grid;
+  place-items: center;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: clamp(18px, 4vw, 34px);
+  background: var(--night);
+  box-shadow:
+    0 28px 90px oklch(4% 0.03 285 / 0.7),
+    0 0 0 1px oklch(82% 0.13 300 / 0.18),
+    inset 0 0 0 1px oklch(100% 0.01 292 / 0.14);
+  isolation: isolate;
+}
+
+.story-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--night);
+  z-index: 0;
+}
+
+.video-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 42%, transparent 0 42%, oklch(4% 0.02 285 / 0.24) 100%),
+    linear-gradient(180deg, oklch(4% 0.02 285 / 0.18), transparent 24%, oklch(4% 0.02 285 / 0.2));
+}
+
+.links,
+.items-layer,
+.burst-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.links {
+  z-index: 2;
+  overflow: visible;
+}
+
+.memory-line {
+  stroke: oklch(84% 0.18 306 / 0.72);
+  stroke-width: 0.72;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 0.55px oklch(94% 0.12 306)) drop-shadow(0 0 1.9px oklch(76% 0.18 306));
+  animation: linkDraw 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.memory-line.wrong {
+  stroke: var(--bad);
+  animation: wrongDraw 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.memory-line.complete {
+  opacity: 0;
+  transition: opacity 420ms ease;
+}
+
+.items-layer {
+  z-index: 3;
+}
+
+.memory-item {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: calc(var(--item-size) * 0.5);
+  height: calc(var(--item-size) * 0.5);
+  translate: -50% -50%;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  filter: none;
+  isolation: isolate;
+  transition:
+    transform 190ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 260ms ease,
+    filter 190ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.memory-item::before {
+  content: none;
+}
+
+.memory-item img {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.memory-item:hover,
+.memory-item:focus-visible,
+.memory-item.selected {
+  outline: none;
+  transform: scale(1.1);
+  filter: none;
+}
+
+.memory-item:hover::before,
+.memory-item:focus-visible::before,
+.memory-item.selected::before {
+  opacity: 1;
+  transform: scale(1.18);
+}
+
+.memory-item.matched {
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.58);
+  filter: none;
+}
+
+.memory-item.matched::before {
+  opacity: 0;
+}
+
+.memory-item.wrong {
+  animation: reject 340ms ease;
+}
+
+.memory-item.locked {
+  pointer-events: none;
+}
+
+.burst-layer {
+  z-index: 4;
+  pointer-events: none;
+}
+
+.spark {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--gold);
+  box-shadow: 0 0 16px var(--gold);
+  animation: spark 760ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+@keyframes linkDraw {
+  from {
+    stroke-dasharray: 140;
+    stroke-dashoffset: 140;
+    opacity: 0;
+  }
+  to {
+    stroke-dasharray: 140;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes wrongDraw {
+  from {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes reject {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-7px);
+  }
+  75% {
+    transform: translateX(7px);
+  }
+}
+
+@keyframes spark {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(var(--distance)) scale(0.2);
+  }
+}
+
+@media (max-height: 680px) {
+  .memory-item {
+    width: calc(var(--item-size) * 0.5);
+    height: calc(var(--item-size) * 0.5);
+  }
+}
+
+@media (orientation: portrait) {
+  .phone-game {
+    width: min(calc(100vw - 24px), 960px);
+  }
+}
