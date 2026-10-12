@@ -117,8 +117,9 @@ button {
   position: absolute;
   left: var(--x);
   top: var(--y);
-  width: calc(var(--item-size) * 0.5);
-  height: calc(var(--item-size) * 0.5);
+  /* the charm stays small; the button around it is at least 48px so it is easy to tap */
+  width: max(48px, calc(var(--item-size) * 0.5));
+  height: max(48px, calc(var(--item-size) * 0.5));
   translate: -50% -50%;
   border: 0;
   border-radius: 999px;
@@ -144,8 +145,8 @@ button {
 .memory-item img {
   position: relative;
   z-index: 1;
-  max-width: 100%;
-  max-height: 100%;
+  width: calc(var(--item-size) * 0.5);
+  height: calc(var(--item-size) * 0.5);
   object-fit: contain;
   pointer-events: none;
   user-select: none;
@@ -202,6 +203,92 @@ button {
   animation: spark 760ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: radial-gradient(circle at 50% 50%, oklch(8% 0.035 285 / 0.38), oklch(4% 0.02 285 / 0.62));
+  backdrop-filter: blur(2px);
+  transition:
+    opacity 320ms ease,
+    visibility 0s;
+}
+
+#outro {
+  background: linear-gradient(180deg, transparent 40%, oklch(4% 0.02 285 / 0.55));
+  backdrop-filter: none;
+  place-items: end center;
+}
+
+.overlay.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 320ms ease,
+    visibility 0s 320ms;
+}
+
+.overlay-card {
+  max-width: min(380px, 100%);
+  padding: clamp(14px, 3.4vw, 26px) clamp(18px, 4.4vw, 34px);
+  border-radius: 22px;
+  text-align: center;
+  background: oklch(14% 0.05 290 / 0.78);
+  box-shadow:
+    0 18px 60px oklch(4% 0.03 285 / 0.6),
+    inset 0 0 0 1px oklch(82% 0.13 300 / 0.28);
+  animation: cardIn 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.overlay.is-hidden .overlay-card {
+  animation: none;
+}
+
+.overlay-card h1,
+.overlay-card h2 {
+  margin: 0 0 6px;
+  font-size: clamp(20px, 4.2vw, 30px);
+  line-height: 1.1;
+  color: var(--gold);
+  text-shadow: 0 0 18px oklch(84% 0.16 84 / 0.45);
+}
+
+.overlay-card p {
+  margin: 0 0 clamp(10px, 2.4vw, 18px);
+  font-size: clamp(13px, 2.4vw, 16px);
+  line-height: 1.35;
+}
+
+.overlay-button {
+  min-width: 128px;
+  min-height: 48px;
+  padding: 0 26px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--violet), oklch(62% 0.22 306));
+  color: oklch(14% 0.05 290);
+  font-weight: 700;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: 0 6px 22px oklch(62% 0.22 306 / 0.5);
+  transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.overlay-button:hover,
+.overlay-button:focus-visible {
+  outline: none;
+  transform: scale(1.05);
+}
+
+.overlay-button:active {
+  transform: scale(0.97);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -246,6 +333,17 @@ button {
   }
 }
 
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes spark {
   from {
     opacity: 1;
@@ -259,8 +357,8 @@ button {
 
 @media (max-height: 680px) {
   .memory-item {
-    width: calc(var(--item-size) * 0.5);
-    height: calc(var(--item-size) * 0.5);
+    width: max(48px, calc(var(--item-size) * 0.5));
+    height: max(48px, calc(var(--item-size) * 0.5));
   }
 }
 
