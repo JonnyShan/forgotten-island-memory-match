@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Forgotten Island: Match the Memories</title>
-    <link rel="stylesheet" href="./styles.css?v=best-items-small2" />
+    <link rel="stylesheet" href="./styles.css?v=intro-win1" />
   </head>
   <body>
     <main class="phone-game" aria-label="Forgotten Island memory matching game">
@@ -22,10 +22,24 @@
         <svg id="links" class="links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
         <div id="items" class="items-layer" aria-label="Memory items"></div>
         <div id="burstLayer" class="burst-layer" aria-hidden="true"></div>
+        <div id="intro" class="overlay" role="dialog" aria-labelledby="introTitle">
+          <div class="overlay-card">
+            <h1 id="introTitle">Forgotten Island</h1>
+            <p>Tap two charms that match to bring the friends back together.</p>
+            <button id="startButton" class="overlay-button" type="button">Play</button>
+          </div>
+        </div>
+        <div id="outro" class="overlay is-hidden" role="dialog" aria-labelledby="outroTitle">
+          <div class="overlay-card">
+            <h2 id="outroTitle">Memories restored!</h2>
+            <p>You matched all 5 pairs.</p>
+            <button id="replayButton" class="overlay-button" type="button">Play again</button>
+          </div>
+        </div>
         <p id="status" class="sr-only" aria-live="polite">Choose two matching memory items.</p>
       </section>
     </main>
 
-    <script src="./game.js?v=best-items-small2"></script>
+    <script src="./game.js?v=intro-win1"></script>
   </body>
 </html>

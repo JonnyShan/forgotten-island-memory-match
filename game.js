@@ -30,10 +30,38 @@ const itemsLayer = document.querySelector("#items");
 const links = document.querySelector("#links");
 const burstLayer = document.querySelector("#burstLayer");
 const statusEl = document.querySelector("#status");
+const intro = document.querySelector("#intro");
+const outro = document.querySelector("#outro");
 
 function init() {
   renderItems();
   prepareVideo();
+  document.querySelector("#startButton").addEventListener("click", startGame);
+  document.querySelector("#replayButton").addEventListener("click", restartGame);
+}
+
+function startGame() {
+  unlockAudio();
+  intro.classList.add("is-hidden");
+  statusEl.textContent = "Choose two matching memory items.";
+}
+
+function restartGame() {
+  state.selectedId = null;
+  state.matchedPairs.clear();
+  state.matchedItems.clear();
+  state.segmentIndex = 0;
+  state.advancing = false;
+  storyVideo.pause();
+  storyVideo.currentTime = 0;
+  renderItems();
+  outro.classList.add("is-hidden");
+  statusEl.textContent = "Choose two matching memory items.";
+}
+
+function showWin() {
+  outro.classList.remove("is-hidden");
+  document.querySelector("#replayButton").focus({ preventScroll: true });
 }
 
 function prepareVideo() {
@@ -155,6 +183,7 @@ function playNextSegment() {
         if (state.segmentIndex === TOTAL_SEGMENTS) {
           statusEl.textContent = "All memories matched.";
           playVictorySound();
+          setTimeout(showWin, 1200);
         }
       }
     };
